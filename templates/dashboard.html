@@ -1,13 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AI Medical Coding Dashboard</title>
+<title>Medical Coding Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -15,18 +17,23 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-    background:linear-gradient(
-        135deg,
-        #0f172a,
-        #2563eb,
-        #06b6d4
-    );
     min-height:100vh;
+    background:linear-gradient(
+    135deg,
+    #0f172a,
+    #1e3a8a,
+    #06b6d4
+    );
     padding:30px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
 }
 
 .header{
@@ -36,80 +43,49 @@ body{
 }
 
 .header h1{
-    font-size:40px;
+    font-size:42px;
 }
 
-.stats{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
+.header p{
+    opacity:0.9;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px;
+    margin-bottom:30px;
 }
 
 .card{
-    background:white;
-    width:280px;
-    padding:25px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
     border-radius:20px;
+    padding:25px;
+    color:white;
     text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+    box-shadow:0 8px 25px rgba(0,0,0,0.2);
 }
 
-.card h2{
-    color:#2563eb;
+.card h3{
     margin-bottom:10px;
 }
 
 .card h1{
-    color:#16a34a;
-    font-size:40px;
+    font-size:42px;
 }
 
-.analytics{
-    margin-top:40px;
+.history-box{
     background:white;
-    padding:25px;
     border-radius:20px;
-}
-
-.analytics h2{
-    margin-bottom:20px;
-}
-
-.bar{
-    height:40px;
-    line-height:40px;
-    color:white;
-    text-align:center;
-    border-radius:10px;
-    margin-bottom:15px;
-    font-weight:bold;
-}
-
-.icd{
-    width:80%;
-    background:#2563eb;
-}
-
-.cpt{
-    width:65%;
-    background:#7c3aed;
-}
-
-.report{
-    width:90%;
-    background:#16a34a;
-}
-
-.history{
-    margin-top:40px;
-    background:white;
     padding:25px;
-    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    overflow-x:auto;
 }
 
-.history h2{
+.history-box h2{
     margin-bottom:20px;
+    color:#1e3a8a;
 }
 
 table{
@@ -120,27 +96,51 @@ table{
 th{
     background:#2563eb;
     color:white;
-    padding:12px;
+    padding:14px;
 }
 
 td{
-    padding:10px;
+    padding:12px;
+    border-bottom:1px solid #e5e7eb;
     text-align:center;
-    border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+    background:#f8fafc;
+}
+
+.actions{
+    margin-top:25px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
 }
 
 .btn{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 25px;
-    background:#2563eb;
-    color:white;
     text-decoration:none;
-    border-radius:10px;
+    color:white;
+    padding:14px 25px;
+    border-radius:50px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.home-btn{
+    background:#9333ea;
+}
+
+.pdf-btn{
+    background:#22c55e;
 }
 
 .btn:hover{
-    opacity:0.9;
+    transform:translateY(-3px);
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#666;
 }
 
 </style>
@@ -149,90 +149,98 @@ td{
 
 <body>
 
+<div class="container">
+
 <div class="header">
 
-<h1>📊 AI Medical Coding Dashboard</h1>
+<h1>
+📊 Medical Coding Dashboard
+</h1>
+
+<p>
+Patient Coding Analytics & History
+</p>
 
 </div>
 
-<div class="stats">
+<div class="cards">
 
 <div class="card">
-<h2>Total Reports</h2>
+<h3>Total Reports</h3>
 <h1>{{ total_reports }}</h1>
 </div>
 
 <div class="card">
-<h2>Total ICD Codes</h2>
+<h3>Total ICD Codes</h3>
 <h1>{{ total_icd }}</h1>
 </div>
 
 <div class="card">
-<h2>Total CPT Codes</h2>
+<h3>Total CPT Codes</h3>
 <h1>{{ total_cpt }}</h1>
 </div>
 
 </div>
 
-<div class="analytics">
+<div class="history-box">
 
-<h2>📈 System Analytics</h2>
+<h2>
+Patient Coding History
+</h2>
 
-<div class="bar icd">
-ICD Database Records
-</div>
-
-<div class="bar cpt">
-CPT Database Records
-</div>
-
-<div class="bar report">
-Generated Reports
-</div>
-
-</div>
-
-<div class="history">
-
-<h2>📝 Recent Coding History</h2>
+{% if records %}
 
 <table>
 
 <tr>
+<th>ID</th>
 <th>Patient</th>
 <th>Diagnosis</th>
 <th>Procedure</th>
-<th>ICD</th>
-<th>CPT</th>
+<th>ICD Code</th>
+<th>CPT Code</th>
 </tr>
 
 {% for row in records %}
 
 <tr>
-
-<td>{{ row.Patient }}</td>
-
-<td>{{ row.Diagnosis }}</td>
-
-<td>{{ row.Procedure }}</td>
-
-<td>{{ row.ICD }}</td>
-
-<td>{{ row.CPT }}</td>
-
+<td>{{ row.id }}</td>
+<td>{{ row.patient }}</td>
+<td>{{ row.diagnosis }}</td>
+<td>{{ row.procedure }}</td>
+<td>{{ row.icd }}</td>
+<td>{{ row.cpt }}</td>
 </tr>
 
 {% endfor %}
 
 </table>
 
-<a href="/" class="btn">
-🏠 Back Home
+{% else %}
+
+<div class="empty">
+No patient records found.
+Generate a medical code first.
+</div>
+
+{% endif %}
+
+<div class="actions">
+
+<a href="/" class="btn home-btn">
+🏠 Back To Home
+</a>
+
+<a href="/download_pdf" class="btn pdf-btn">
+📄 Download PDF
 </a>
 
 </div>
 
+</div>
+
+</div>
+
 </body>
+
 </html>
-
-

@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, send_file
 import pandas as pd
 import sqlite3
@@ -9,7 +8,7 @@ from reportlab.pdfgen import canvas
 app = Flask(__name__)
 
 # =====================================
-# CREATE REQUIRED FOLDERS
+# CREATE FOLDERS
 # =====================================
 
 os.makedirs("database", exist_ok=True)
@@ -40,7 +39,7 @@ CREATE TABLE IF NOT EXISTS coding_history (
 conn.commit()
 
 # =====================================
-# LOAD CSV DATABASES
+# LOAD ICD & CPT FILES
 # =====================================
 
 icd_data = pd.read_csv(
@@ -59,7 +58,6 @@ latest_report = {}
 
 @app.route("/")
 def home():
-
     return render_template(
         "index.html"
     )
@@ -86,7 +84,7 @@ def predict():
         "procedure"
     ].strip().lower()
 
-    # ICD LOOKUP
+    # ICD MATCH
 
     icd_match = icd_data[
         icd_data["Diagnosis"]
@@ -95,14 +93,11 @@ def predict():
     ]
 
     if not icd_match.empty:
-
         icd_code = icd_match.iloc[0]["ICD"]
-
     else:
-
         icd_code = "ICD Not Found"
 
-    # CPT LOOKUP
+    # CPT MATCH
 
     cpt_match = cpt_data[
         cpt_data["Procedure"]
@@ -111,29 +106,11 @@ def predict():
     ]
 
     if not cpt_match.empty:
-
         cpt_code = cpt_match.iloc[0]["CPT"]
-
     else:
-
         cpt_code = "CPT Not Found"
 
-    # STORE LATEST REPORT
-
-    latest_report = {
-
-        "patient": patient,
-
-        "diagnosis": diagnosis,
-
-        "procedure": procedure,
-
-        "icd": icd_code,
-
-        "cpt": cpt_code
-    }
-
-    # SAVE TO SQLITE DATABASE
+    # SAVE TO DATABASE
 
     cursor.execute(
         """
@@ -159,6 +136,16 @@ def predict():
 
     conn.commit()
 
+    # STORE REPORT
+
+    latest_report = {
+        "patient": patient,
+        "diagnosis": diagnosis,
+        "procedure": procedure,
+        "icd": icd_code,
+        "cpt": cpt_code
+    }
+
     return render_template(
         "result.html",
         patient=patient,
@@ -178,6 +165,7 @@ def dashboard():
     query = """
     SELECT *
     FROM coding_history
+    ORDER BY id DESC
     """
 
     history = pd.read_sql_query(
@@ -185,24 +173,30 @@ def dashboard():
         conn
     )
 
-    total_reports = len(history)
+    print(history)
 
-    total_icd = len(icd_data)
-
-    total_cpt = len(cpt_data)
-
-    records = history.tail(
-        10
-    ).to_dict(
+    records = history.to_dict(
         orient="records"
+    )
+
+    total_reports = len(
+        history
+    )
+
+    total_icd = len(
+        icd_data
+    )
+
+    total_cpt = len(
+        cpt_data
     )
 
     return render_template(
         "dashboard.html",
+        records=records,
         total_reports=total_reports,
         total_icd=total_icd,
-        total_cpt=total_cpt,
-        records=records
+        total_cpt=total_cpt
     )
 
 # =====================================
@@ -226,7 +220,7 @@ def download_pdf():
     )
 
     c.drawString(
-        150,
+        180,
         800,
         "Medical Coding Report"
     )
@@ -251,13 +245,13 @@ def download_pdf():
     c.drawString(
         50,
         680,
-        f"ICD Code: {latest_report.get('icd','')}"
+        f"Procedure: {latest_report.get('procedure','')}"
     )
 
     c.drawString(
         50,
         650,
-        f"Procedure: {latest_report.get('procedure','')}"
+        f"ICD Code: {latest_report.get('icd','')}"
     )
 
     c.drawString(
@@ -269,7 +263,7 @@ def download_pdf():
     c.drawString(
         50,
         590,
-        f"Generated On: {datetime.now()}"
+        f"Generated On: {datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
     )
 
     c.save()
@@ -284,8 +278,6 @@ def download_pdf():
 # =====================================
 
 if __name__ == "__main__":
-
     app.run(
         debug=True
     )
-

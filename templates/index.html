@@ -1,48 +1,290 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>AI Medical Coding System</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Medical Coding AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-body{
+*{
     margin:0;
-    font-family:Arial;
-    background:linear-gradient(135deg,#0f172a,#2563eb,#06b6d4);
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:linear-gradient(
+    -45deg,
+    #0f172a,
+    #1e3a8a,
+    #06b6d4,
+    #14b8a6
+    );
+
+    background-size:400% 400%;
+
+    animation:bgAnimation 10s ease infinite;
+
+    padding:30px;
+}
+
+@keyframes bgAnimation{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
 }
 
 .container{
-    width:800px;
-    margin:40px auto;
-    background:white;
-    padding:30px;
-    border-radius:20px;
+
+max-width:1300px;
+margin:auto;
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(15px);
+
+border-radius:30px;
+
+padding:40px;
+
+box-shadow:0px 10px 30px rgba(0,0,0,0.3);
+
 }
 
-h1{
-    text-align:center;
-    color:#2563eb;
+.hero{
+
+text-align:center;
+
+overflow:hidden;
+
+margin-bottom:25px;
+
 }
 
-img{
-    width:100%;
-    border-radius:20px;
+.running-text{
+
+display:inline-block;
+
+white-space:nowrap;
+
+font-size:28px;
+
+font-weight:700;
+
+color:#00ffff;
+
+animation:running 15s linear infinite;
+
+}
+
+@keyframes running{
+
+0%{
+transform:translateX(100%);
+}
+
+100%{
+transform:translateX(-100%);
+}
+
+}
+
+.hero h1{
+
+font-size:50px;
+
+color:white;
+
+margin-top:20px;
+
+}
+
+.hero p{
+
+color:white;
+
+font-size:18px;
+
+margin-top:10px;
+
+}
+
+.slider{
+
+margin-top:25px;
+
+}
+
+.banner{
+
+width:100%;
+
+height:500px;
+
+object-fit:cover;
+
+border-radius:25px;
+
+transition:all 1s ease;
+
+box-shadow:0px 10px 30px rgba(0,0,0,0.3);
+
+}
+
+.form-box{
+
+margin-top:30px;
+
+background:rgba(255,255,255,0.10);
+
+padding:30px;
+
+border-radius:25px;
+
+}
+
+label{
+
+display:block;
+
+margin-top:15px;
+
+margin-bottom:8px;
+
+color:white;
+
+font-weight:600;
+
 }
 
 input{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    margin-bottom:15px;
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+outline:none;
+
 }
 
-button{
-    width:100%;
-    padding:15px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    font-size:18px;
+.buttons{
+
+display:flex;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+margin-top:25px;
+
+}
+
+.btn{
+
+padding:15px 30px;
+
+border:none;
+
+border-radius:50px;
+
+cursor:pointer;
+
+font-weight:600;
+
+font-size:16px;
+
+text-decoration:none;
+
+color:white;
+
+transition:0.3s;
+
+}
+
+.generate{
+
+background:#22c55e;
+
+}
+
+.dashboard{
+
+background:#2563eb;
+
+}
+
+.btn:hover{
+
+transform:translateY(-4px);
+
+}
+
+.features{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
+
+margin-top:35px;
+
+}
+
+.feature{
+
+background:rgba(255,255,255,0.12);
+
+padding:20px;
+
+border-radius:20px;
+
+color:white;
+
+}
+
+.feature h3{
+
+margin-bottom:10px;
+
+}
+
+.footer{
+
+margin-top:30px;
+
+text-align:center;
+
+color:white;
+
 }
 
 </style>
@@ -53,28 +295,155 @@ button{
 
 <div class="container">
 
-<img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80">
+<div class="hero">
 
-<h1>🏥 AI Medical Coding System</h1>
+<div class="running-text">
+
+🏥 Medical Coding AI • Automatic ICD Coding • CPT Coding • PDF Reports • Dashboard Analytics • Healthcare Innovation • Medical Intelligence •
+
+</div>
+
+<h1>
+Medical Coding AI
+</h1>
+
+<p>
+Automatically Generate ICD & CPT Codes From Diagnosis And Procedures
+</p>
+
+</div>
+
+<div class="slider">
+
+<img
+id="slider-image"
+class="banner"
+src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1400"
+alt="Medical Banner">
+
+</div>
+
+<div class="form-box">
 
 <form action="/predict" method="POST">
 
-<label>Patient Name</label>
-<input type="text" name="patient" required>
+<label>
+Patient Name
+</label>
 
-<label>Diagnosis</label>
-<input type="text" name="diagnosis" required>
+<input
+type="text"
+name="patient"
+placeholder="Enter Patient Name"
+required>
 
-<label>Procedure</label>
-<input type="text" name="procedure" required>
+<label>
+Diagnosis
+</label>
 
-<button type="submit">
+<input
+type="text"
+name="diagnosis"
+placeholder="Example: diabetes"
+required>
+
+<label>
+Procedure
+</label>
+
+<input
+type="text"
+name="procedure"
+placeholder="Example: hba1c test"
+required>
+
+<div class="buttons">
+
+<button
+type="submit"
+class="btn generate">
 Generate Medical Codes
 </button>
+
+<a
+href="/dashboard"
+class="btn dashboard">
+Open Dashboard
+</a>
+
+</div>
 
 </form>
 
 </div>
 
+<div class="features">
+
+<div class="feature">
+<h3>📋 ICD Coding</h3>
+<p>Automatic diagnosis to ICD code matching.</p>
+</div>
+
+<div class="feature">
+<h3>💉 CPT Coding</h3>
+<p>Automatic procedure to CPT code matching.</p>
+</div>
+
+<div class="feature">
+<h3>📄 PDF Reports</h3>
+<p>Download professional coding reports.</p>
+</div>
+
+<div class="feature">
+<h3>📊 Dashboard Analytics</h3>
+<p>Track patient coding history and reports.</p>
+</div>
+
+</div>
+
+<div class="footer">
+
+Medical Coding AI System © 2026
+
+</div>
+
+</div>
+
+<script>
+
+const images = [
+
+"https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=1400",
+
+"https://images.unsplash.com/photo-1584515933487-779824d29309?w=1400",
+
+"https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=1400",
+
+"https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1400",
+
+"https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=1400"
+
+];
+
+let currentImage = 0;
+
+setInterval(() => {
+
+currentImage++;
+
+if(currentImage >= images.length){
+currentImage = 0;
+}
+
+document.getElementById(
+"slider-image"
+).src = images[currentImage];
+
+}, 3000);
+
+</script>
+
 </body>
+
 </html>
+
