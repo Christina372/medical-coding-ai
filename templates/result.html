@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Medical Coding Report</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f172a,#2563eb,#06b6d4);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:800px;
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:30px;
+}
+
+.report{
+    background:#f8fafc;
+    padding:25px;
+    border-radius:15px;
+}
+
+.report p{
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+.code{
+    color:#16a34a;
+    font-weight:bold;
+    font-size:22px;
+}
+
+.button-group{
+    margin-top:30px;
+    display:flex;
+    gap:15px;
+}
+
+.btn{
+    flex:1;
+    text-align:center;
+    padding:15px;
+    border-radius:10px;
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+}
+
+.home{
+    background:#2563eb;
+}
+
+.dashboard{
+    background:#7c3aed;
+}
+
+.pdf{
+    background:#16a34a;
+}
+
+.btn:hover{
+    opacity:0.9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🏥 Medical Coding Report</h1>
+
+<div class="report">
+
+<p>
+<b>Patient Name:</b>
+{{ patient }}
+</p>
+
+<p>
+<b>Diagnosis:</b>
+{{ diagnosis }}
+</p>
+
+<p>
+<b>ICD Code:</b>
+<span class="code">{{ icd }}</span>
+</p>
+
+<p>
+<b>Procedure:</b>
+{{ procedure }}
+</p>
+
+<p>
+<b>CPT Code:</b>
+<span class="code">{{ cpt }}</span>
+</p>
+
+</div>
+
+<div class="button-group">
+
+<a href="/" class="btn home">
+🏠 Home
+</a>
+
+<a href="/dashboard" class="btn dashboard">
+📊 Dashboard
+</a>
+
+<a href="/download_pdf" class="btn pdf">
+📄 Download PDF
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Medical Coding System</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#0f172a,#2563eb,#06b6d4);
+}
+
+.container{
+    width:800px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+}
+
+img{
+    width:100%;
+    border-radius:20px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    margin-bottom:15px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    font-size:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80">
+
+<h1>🏥 AI Medical Coding System</h1>
+
+<form action="/predict" method="POST">
+
+<label>Patient Name</label>
+<input type="text" name="patient" required>
+
+<label>Diagnosis</label>
+<input type="text" name="diagnosis" required>
+
+<label>Procedure</label>
+<input type="text" name="procedure" required>
+
+<button type="submit">
+Generate Medical Codes
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+Diagnosis,ICD
+diabetes,E11.9
+hypertension,I10
+asthma,J45.909
+pneumonia,J18.9
+migraine,G43.909
+covid-19,U07.1
+arthritis,M19.90
+anxiety,F41.9
+depression,F32.9
+obesity,E66.9
+stroke,I63.9
+heart attack,I21.9
+kidney disease,N18.9
+bronchitis,J20.9
+fever,R50.9
+cancer,C80.1
+tuberculosis,A15.9
+epilepsy,G40.909
+dengue,A97.9
+malaria,B54
+hepatitis,B19.9

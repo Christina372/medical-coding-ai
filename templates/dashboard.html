@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Medical Coding Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #2563eb,
+        #06b6d4
+    );
+    min-height:100vh;
+    padding:30px;
+}
+
+.header{
+    text-align:center;
+    color:white;
+    margin-bottom:30px;
+}
+
+.header h1{
+    font-size:40px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.card{
+    background:white;
+    width:280px;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+.card h2{
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+.card h1{
+    color:#16a34a;
+    font-size:40px;
+}
+
+.analytics{
+    margin-top:40px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+}
+
+.analytics h2{
+    margin-bottom:20px;
+}
+
+.bar{
+    height:40px;
+    line-height:40px;
+    color:white;
+    text-align:center;
+    border-radius:10px;
+    margin-bottom:15px;
+    font-weight:bold;
+}
+
+.icd{
+    width:80%;
+    background:#2563eb;
+}
+
+.cpt{
+    width:65%;
+    background:#7c3aed;
+}
+
+.report{
+    width:90%;
+    background:#16a34a;
+}
+
+.history{
+    margin-top:40px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+}
+
+.history h2{
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#2563eb;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 25px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+}
+
+.btn:hover{
+    opacity:0.9;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>📊 AI Medical Coding Dashboard</h1>
+
+</div>
+
+<div class="stats">
+
+<div class="card">
+<h2>Total Reports</h2>
+<h1>{{ total_reports }}</h1>
+</div>
+
+<div class="card">
+<h2>Total ICD Codes</h2>
+<h1>{{ total_icd }}</h1>
+</div>
+
+<div class="card">
+<h2>Total CPT Codes</h2>
+<h1>{{ total_cpt }}</h1>
+</div>
+
+</div>
+
+<div class="analytics">
+
+<h2>📈 System Analytics</h2>
+
+<div class="bar icd">
+ICD Database Records
+</div>
+
+<div class="bar cpt">
+CPT Database Records
+</div>
+
+<div class="bar report">
+Generated Reports
+</div>
+
+</div>
+
+<div class="history">
+
+<h2>📝 Recent Coding History</h2>
+
+<table>
+
+<tr>
+<th>Patient</th>
+<th>Diagnosis</th>
+<th>Procedure</th>
+<th>ICD</th>
+<th>CPT</th>
+</tr>
+
+{% for row in records %}
+
+<tr>
+
+<td>{{ row.Patient }}</td>
+
+<td>{{ row.Diagnosis }}</td>
+
+<td>{{ row.Procedure }}</td>
+
+<td>{{ row.ICD }}</td>
+
+<td>{{ row.CPT }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<a href="/" class="btn">
+🏠 Back Home
+</a>
+
+</div>
+
+</body>
+</html>
+
+
